@@ -24,6 +24,7 @@ project/
 ├── notebook.ipynb
 ├── README.md
 └── requirements.txt
+```
 
 Requirements
 torch
