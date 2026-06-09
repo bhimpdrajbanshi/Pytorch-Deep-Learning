@@ -1,7 +1,4 @@
-from textwrap import dedent
-import pypandoc
 
-text = dedent("""
 # PyTorch Custom Dataset and DataLoader
 
 ## Project Overview
@@ -59,4 +56,3 @@ Deep learning data pipeline
 Author
 
 Bhim Prasad Rajbanshi
-""")
