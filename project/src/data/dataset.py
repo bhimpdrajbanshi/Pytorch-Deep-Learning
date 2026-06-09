@@ -47,3 +47,44 @@ class ImageClassificationDataset(Dataset):
             image = self.transform(image)
             
         return image, label
+
+
+class CustomImageDataset(Dataset):
+
+    def __init__(self, root_dir, transform=None):
+        self.root_dir = Path(root_dir)
+        self.transform = transform
+
+        # Find all class folders
+        self.classes = sorted(
+            [d.name for d in self.root_dir.iterdir() if d.is_dir()]
+        )
+
+        self.class_to_idx = {
+            cls: idx for idx, cls in enumerate(self.classes)
+        }
+
+        self.samples = []
+
+        # Collect image paths and labels
+        for cls in self.classes:
+            class_path = self.root_dir / cls
+
+            for img_path in class_path.glob("*"):
+                if img_path.suffix.lower() in [".jpg", ".jpeg", ".png"]:
+                    self.samples.append(
+                        (img_path, self.class_to_idx[cls])
+                    )
+
+    def __len__(self):
+        return len(self.samples)
+
+    def __getitem__(self, idx):
+        img_path, label = self.samples[idx]
+
+        image = Image.open(img_path).convert("RGB")
+
+        if self.transform:
+            image = self.transform(image)
+
+        return image, label
