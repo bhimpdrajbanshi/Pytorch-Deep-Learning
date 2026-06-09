@@ -1,6 +1,6 @@
 from pathlib import Path
 from torchvision import transforms
-from torch.utils.data import DataLoader, random_split
+from torch.utils.data import random_split
 
 from src.data.dataset import ImageClassificationDataset
 from src.data.dataloader import get_dataloader

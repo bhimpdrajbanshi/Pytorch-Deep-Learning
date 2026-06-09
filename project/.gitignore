@@ -1,0 +1,3 @@
+# Ignore all files inside data folders
+data/
+datasets/
