@@ -14,8 +14,6 @@ def main():
     # ------------------------
     PROJECT_ROOT = Path(__file__).resolve().parent
 
-    # train_dir = PROJECT_ROOT / "raw_data" / "FruitinAmazon" / "train"
-    # val_dir   = PROJECT_ROOT / "raw_data" / "FruitinAmazon" / "val"
     train_dir = PROJECT_ROOT / "data" / "flowers" / "train"
     val_dir   = PROJECT_ROOT / "data" / "flowers" / "val"
 
