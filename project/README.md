@@ -55,11 +55,11 @@ Classes: ['daisy', 'dandelion', 'rose', 'sunflower', 'tulip']
 
 
 ## Learning Outcomes
-Custom Dataset creation
-DataLoader usage
-Image preprocessing
-Batch generation
-Deep learning data pipeline
+- Custom Dataset creation
+- DataLoader usage
+- Image preprocessing
+- Batch generation
+- Deep learning data pipeline
 
 Author
 
