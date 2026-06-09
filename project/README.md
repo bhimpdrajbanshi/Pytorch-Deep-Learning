@@ -16,9 +16,12 @@ It includes a custom Dataset class, DataLoader, image transformations, and visua
 ```text
 project/
 ├── dataset/
-│   ├── train/
-│   ├── test/
-├── notebook.ipynb
+├── notebooks/
+│   ├── notebook.ipynb
+├── src/
+│   ├── data/
+│   ├── models/
+│   ├── training/
 ├── README.md
 └── requirements.txt
 ```
