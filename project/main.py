@@ -1,4 +1,5 @@
 from pathlib import Path
+from datetime import datetime
 from torchvision import transforms
 from torch.utils.data import random_split
 
@@ -18,6 +19,11 @@ def main():
     data_dir = PROJECT_ROOT / "dataset" / "flowers"
 
     print("Dataset path:", data_dir)
+    
+    # 2. EXPERIMENT TRACKING
+    # =========================================================
+    experiment_id = datetime.now().strftime("%Y%m%d_%H%M%S")
+    log_dir = Path("runs") / experiment_id
 
     # ------------------------
     # 2. Transform
@@ -79,18 +85,28 @@ def main():
         train_loader=train_loader,
         val_loader=val_loader,
         lr=0.001,
-        device="cpu"   # change to cuda if available
+        device="cpu" ,  # change to cuda if available
+        log_dir=str(log_dir)
     )
 
     # ------------------------
     # 8. Training
     # ------------------------
     num_epochs = 5
+    
+    train_losses = []
+    train_accs = []
+    val_accs = []
 
     for epoch in range(num_epochs):
 
         train_loss, train_acc = trainer.train_one_epoch()
-        val_acc = trainer.evaluate()
+        val_acc = trainer.evaluate(epoch=epoch)
+        
+        # Store locally (optional for plotting later)
+        train_losses.append(train_loss)
+        train_accs.append(train_acc)
+        val_accs.append(val_acc)
 
         print("\n" + "=" * 40)
         print(f"Epoch {epoch+1}/{num_epochs}")
@@ -99,6 +115,21 @@ def main():
         print(f"Train Acc  : {train_acc:.4f}")
         print(f"Val Acc    : {val_acc:.4f}")
         print("=" * 40)
+        
+        # =====================================================
+        # TENSORBOARD LOGGING
+        # =====================================================
+        trainer.writer.add_scalar("Train/Loss", train_loss, epoch)
+        trainer.writer.add_scalar("Train/Accuracy", train_acc, epoch)
+        trainer.writer.add_scalar("Val/Accuracy", val_acc, epoch)
+
+    # =========================================================
+    # 8. CLOSE WRITER
+    # =========================================================
+    trainer.writer.close()
+
+    print("\nTraining completed.")
+    print(f"Run TensorBoard with: tensorboard --logdir runs")
 
 
 if __name__ == "__main__":
